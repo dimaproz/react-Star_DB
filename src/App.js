@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import Header from './components/header';
+import RandomPlanet from './components/random-planet';
+import ItemList from './components/item-list';
+import PersonDetails from './components/person-details';
+
 import './App.css';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Header />
+      <RandomPlanet />
+
+      <div className="row mb2">
+        <div className="col-md-6">
+          <ItemList />
+        </div>
+        <div className="col-md-6">
+          <PersonDetails />
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
