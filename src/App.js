@@ -18,6 +18,7 @@ onPersoneSelected = (id) => {
   this.setState({
     selectedPersone: id
   });
+  console.log(this.state.selectedPersone);
 }
 
 toggleRandomPlanet = () => {
@@ -28,7 +29,7 @@ toggleRandomPlanet = () => {
 
 
   render() {
-    const {showRandomPlanet, selectedPersone} = this.state;
+    const {showRandomPlanet} = this.state;
     const planet = showRandomPlanet ? <RandomPlanet /> : null ;
     return (
       <div className="container">
@@ -41,7 +42,7 @@ toggleRandomPlanet = () => {
             <ItemList onItemSelected={this.onPersoneSelected} />
           </div>
           <div className="col-md-6">
-            <PersonDetails personeId={selectedPersone}/>
+            <PersonDetails personId={this.state.selectedPersone}/>
           </div>
         </div>
       </div>
