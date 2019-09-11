@@ -4,11 +4,11 @@ import Header from './components/header';
 import RandomPlanet from './components/random-planet';
 import ItemList from './components/item-list';
 import PersonDetails from './components/person-details';
-
-import './App.css';
 import ErrorIndicator from './components/error-indicator';
 import ErrorButton from './components/error-button';
 import PeoplePage from './components/people-page';
+
+import './App.css';
 
 class App extends React.Component {
 
