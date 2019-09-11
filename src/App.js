@@ -6,21 +6,28 @@ import ItemList from './components/item-list';
 import PersonDetails from './components/person-details';
 
 import './App.css';
+import ErrorIndicator from './components/error-indicator';
+import ErrorButton from './components/error-button';
+import PeoplePage from './components/people-page';
 
 class App extends React.Component {
 
 state = {
   showRandomPlanet: true,
-  selectedPersone: null
+  selectedPersone: null,
+  hasError: false
 }
 
 onPersoneSelected = (id) => {
   this.setState({
     selectedPersone: id
   });
-  console.log(this.state.selectedPersone);
 }
-
+componentDidCatch() {
+  this.setState({
+    hasError: true
+  })
+}
 toggleRandomPlanet = () => {
   this.setState({
     showRandomPlanet: !this.state.showRandomPlanet
@@ -29,22 +36,29 @@ toggleRandomPlanet = () => {
 
 
   render() {
-    const {showRandomPlanet} = this.state;
+    const {showRandomPlanet, hasError} = this.state;
     const planet = showRandomPlanet ? <RandomPlanet /> : null ;
+    if(hasError) {
+      return <ErrorIndicator />;
+    }
     return (
-      <div className="container">
+      <div className="container stardb-app">
         <Header />
-        {planet}
-        <button className="toggle-planet btn btn-warning btn-lg" onClick={this.toggleRandomPlanet}>Toggle Random Planet</button>
+        { planet }
 
-        <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList onItemSelected={this.onPersoneSelected} />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails personId={this.state.selectedPersone}/>
-          </div>
+        <div className="row mb2 button-row">
+          <button
+            className="toggle-planet btn btn-warning btn-lg"
+            onClick={this.toggleRandomPlanet}>
+            Toggle Random Planet
+          </button>
+          <ErrorButton />
         </div>
+
+        <PeoplePage />
+        <PeoplePage />
+        <PeoplePage />
+
       </div>
     );
   }

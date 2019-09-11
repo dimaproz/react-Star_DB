@@ -14,7 +14,9 @@
 .person-details .list-group-item {
   padding: .25rem;
 }
-
+.person-details .list-group {
+  margin-bottom: 10px;
+}
 .person-details .list-group-item .term{
   margin-right: .5rem;
 }
