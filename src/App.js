@@ -1,61 +1,52 @@
-import React from 'react';
-import ItemList from './components/item-list';
-import PersonDetails from './components/person-details';
+import React, { Component } from 'react';
+
 import Header from './components/header';
 import RandomPlanet from './components/random-planet';
-import ErrorIndicator from './components/error-indicator';
-import ErrorButton from './components/error-button';
-import PeoplePage from './components/people-page';
-import SwapiService from './services/swapi-service';
-import './App.css';
 import ErrorBoundry from './components/error-boundry';
+import SwapiService from './services/swapi-service';
+import DummySwapiService from './services/dummy-swapi-service';
 
+import { PeoplePage, PlanetsPage, StarshipsPage } from './components/pages';
+import { SwapiServiceProvider } from './components/swapi-service-context';
 
-class App extends React.Component {
+import './App.css';
 
-  swapiService = new SwapiService();
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+export default class App extends Component {
 
   state = {
-    showRandomPlanet: true,
-    selectedPersone: null,
-  }
+    swapiService: new SwapiService()
+  };
 
-  onPersoneSelected = (id) => {
-    this.setState({
-      selectedPersone: id
+  onServiceChange = () => {
+    this.setState(({ swapiService }) => {
+      const Service = swapiService instanceof SwapiService ?
+                        DummySwapiService : SwapiService;
+      return {
+        swapiService: new Service()
+      };
     });
-  }
-  toggleRandomPlanet = () => {
-    this.setState({
-      showRandomPlanet: !this.state.showRandomPlanet
-    });
-  }
-
+  };
 
   render() {
-    const { showRandomPlanet, hasError } = this.state;
-    const planet = showRandomPlanet ? <RandomPlanet /> : null;
+
     return (
       <ErrorBoundry>
-        <div className="container stardb-app">
-          <Header />
-          {planet}
+        <SwapiServiceProvider value={this.state.swapiService} >
+          <Router>
+            <div className="stardb-app">
+              <Header onServiceChange={this.onServiceChange} />
+              <RandomPlanet />
 
-          <div className="row mb2 button-row">
-            <button
-              className="toggle-planet btn btn-warning btn-lg"
-              onClick={this.toggleRandomPlanet}>
-              Toggle Random Planet
-          </button>
-            <ErrorButton />
-          </div>
-          <PeoplePage />
-        </div>
+              <Route path="/people" component={PeoplePage} />
+              <Route path="/planets" component={PlanetsPage} />
+              <Route path="/starships" component={StarshipsPage} />
+
+            </div>
+          </Router>
+        </SwapiServiceProvider>
       </ErrorBoundry>
-
     );
   }
-
-};
-
-export default App;
+}

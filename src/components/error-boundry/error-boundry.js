@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import ErrorIndicator from '../error-indicator';
-import './error-boundry.css';
 
+import ErrorIndicator from '../error-indicator/error-indicator';
 
-class ErrorBoundry extends Component {
+export default class ErrorBoundry extends Component {
+
   state = {
     hasError: false
-  }
+  };
 
   componentDidCatch() {
     this.setState({
@@ -15,14 +15,11 @@ class ErrorBoundry extends Component {
   }
 
   render() {
-    const { hasError } = this.state;
-    if (hasError) {
+
+    if (this.state.hasError) {
       return <ErrorIndicator />
     }
-    return (
-      this.props.children
-    );
-  };
-}
 
-export default ErrorBoundry;
+    return this.props.children;
+  }
+}

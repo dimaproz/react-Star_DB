@@ -1,3 +1,3 @@
-import Header from './random-planet';
+import RandomPlanet from './random-planet';
 
-export default Header;
+export default RandomPlanet;
